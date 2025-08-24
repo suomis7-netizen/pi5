@@ -457,19 +457,31 @@ const PiMatchApp = () => {
             {!isDragging && (
               <div className="flex justify-center space-x-6 pt-4">
                 <button 
-                  onClick={() => handleSwipe('left')}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    handleSwipe('left');
+                  }}
                   className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30 hover:bg-red-500 hover:border-red-500 transition-all shadow-lg"
                 >
                   <X className="w-6 h-6 text-white" />
                 </button>
                 <button 
-                  onClick={() => makePiPayment(5, 'Super Like')}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    makePiPayment(5, 'Super Like');
+                  }}
                   className="w-14 h-14 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-110 transition-all border-2 border-white/30"
                 >
                   <Star className="w-6 h-6 text-white" />
                 </button>
                 <button 
-                  onClick={() => handleSwipe('right')}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    handleSwipe('right');
+                  }}
                   className="w-14 h-14 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-110 transition-all border-2 border-white/30"
                 >
                   <Heart className="w-6 h-6 text-white" />
