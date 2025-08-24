@@ -367,6 +367,12 @@ const PiMatchApp = () => {
     );
   };
 
+  // Desktop mouse swipe (separate from card)
+  const handleDesktopSwipe = (direction: string) => {
+    console.log("Desktop swiping:", direction);
+    handleSwipe(direction);
+  };
+
   const ProfileCard = ({ user }: { user: any }) => {
     const deltaX = isDragging ? dragCurrent.x - dragStart.x : 0;
     const deltaY = isDragging ? dragCurrent.y - dragStart.y : 0;
@@ -388,14 +394,8 @@ const PiMatchApp = () => {
             transition: isDragging ? 'none' : 'all 0.3s ease-out'
           }}
           onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
+          onTouchMove={handleTouchMove}  
           onTouchEnd={handleTouchEnd}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={() => {
-            if (isDragging) handleMouseUp({} as React.MouseEvent);
-          }}
         >
           <img 
             src={user.images[0]} 
@@ -443,7 +443,7 @@ const PiMatchApp = () => {
             
             <p className="text-gray-200 mb-3 text-sm leading-relaxed">{user.bio}</p>
             
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex flex-wrap gap-2">
               {user.interests.slice(0, 4).map((interest: string, index: number) => (
                 <span 
                   key={index}
@@ -453,44 +453,45 @@ const PiMatchApp = () => {
                 </span>
               ))}
             </div>
-
-            {!isDragging && (
-              <div className="flex justify-center space-x-6 pt-4">
-                <button 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    handleSwipe('left');
-                  }}
-                  className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30 hover:bg-red-500 hover:border-red-500 transition-all shadow-lg"
-                >
-                  <X className="w-6 h-6 text-white" />
-                </button>
-                <button 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    makePiPayment(5, 'Super Like');
-                  }}
-                  className="w-14 h-14 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-110 transition-all border-2 border-white/30"
-                >
-                  <Star className="w-6 h-6 text-white" />
-                </button>
-                <button 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    handleSwipe('right');
-                  }}
-                  className="w-14 h-14 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-110 transition-all border-2 border-white/30"
-                >
-                  <Heart className="w-6 h-6 text-white" />
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </div>
+    );
+  };
+
+  const SwipeButtons = () => (
+    <div className="flex justify-center space-x-6 py-4">
+      <button 
+        onClick={(e) => {
+          e.stopPropagation();
+          console.log("X button clicked");
+          handleSwipe('left');
+        }}
+        className="w-16 h-16 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-gray-200 hover:bg-red-500 hover:border-red-500 hover:text-white transition-all shadow-lg"
+      >
+        <X className="w-6 h-6" />
+      </button>
+      <button 
+        onClick={(e) => {
+          e.stopPropagation();
+          console.log("Star button clicked");
+          makePiPayment(5, 'Super Like');
+        }}
+        className="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-110 transition-all border-2 border-white/30"
+      >
+        <Star className="w-6 h-6 text-white" />
+      </button>
+      <button 
+        onClick={(e) => {
+          e.stopPropagation();
+          console.log("Heart button clicked");
+          handleSwipe('right');
+        }}
+        className="w-16 h-16 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-110 transition-all border-2 border-white/30"
+      >
+        <Heart className="w-6 h-6 text-white" />
+      </button>
+    </div>
     );
   };
 
@@ -585,6 +586,7 @@ const PiMatchApp = () => {
         {mockUsers.length > 0 && (
           <ProfileCard user={mockUsers[currentCardIndex]} />
         )}
+        <SwipeButtons />
       </div>
 
       <div className="bg-white/90 backdrop-blur-lg border-t border-purple-100 p-4 flex-shrink-0">
