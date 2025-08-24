@@ -607,4 +607,153 @@ const PiMatchApp = () => {
         <div className="flex items-center justify-between max-w-sm mx-auto">
           <button 
             onClick={() => setCurrentScreen('main')}
-            className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center hover:bg-purple-
+            className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center hover:bg-purple-200 transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5 text-purple-600" />
+          </button>
+          <h1 className="text-xl font-bold text-gray-800">Pi Premium</h1>
+          <div className="w-10"></div>
+        </div>
+      </div>
+
+      <div className="p-4">
+        <div className="max-w-sm mx-auto space-y-4">
+          <div className="bg-gradient-to-r from-yellow-400 to-yellow-300 rounded-2xl p-6 text-center shadow-lg">
+            <div className="text-purple-800 font-bold text-lg mb-1">Your Pi Balance</div>
+            <div className="text-3xl font-bold text-purple-900">{piBalance} π</div>
+          </div>
+
+          <div className="space-y-3">
+            <div className="bg-white rounded-xl p-4 border border-purple-100 shadow-sm">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-red-500 rounded-xl flex items-center justify-center">
+                    <Zap className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-800">Super Like</h3>
+                    <p className="text-sm text-gray-600">Stand out from the crowd</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => makePiPayment(5, 'Super Like')}
+                  className="bg-gradient-to-r from-pink-500 to-red-500 text-white px-4 py-2 rounded-lg font-medium hover:shadow-lg transition-all"
+                >
+                  5π
+                </button>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl p-4 border border-purple-100 shadow-sm">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center">
+                    <Star className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-800">Profile Boost</h3>
+                    <p className="text-sm text-gray-600">Be seen by more people</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => makePiPayment(10, 'Profile Boost')}
+                  className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:shadow-lg transition-all"
+                >
+                  10π
+                </button>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl p-4 border border-purple-100 shadow-sm">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-xl flex items-center justify-center">
+                    <Eye className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-800">Who Viewed Me</h3>
+                    <p className="text-sm text-gray-600">See your secret admirers</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => makePiPayment(15, 'Who Viewed Me')}
+                  className="bg-gradient-to-r from-green-500 to-teal-500 text-white px-4 py-2 rounded-lg font-medium hover:shadow-lg transition-all"
+                >
+                  15π
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const MatchesScreen = () => (
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
+      <div className="bg-white/80 backdrop-blur-lg border-b border-purple-100 p-4">
+        <div className="flex items-center justify-between max-w-sm mx-auto">
+          <button 
+            onClick={() => setCurrentScreen('main')}
+            className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center hover:bg-purple-200 transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5 text-purple-600" />
+          </button>
+          <h1 className="text-xl font-bold text-gray-800">Matches</h1>
+          <div className="w-10"></div>
+        </div>
+      </div>
+
+      <div className="p-4">
+        <div className="max-w-sm mx-auto">
+          {matches.length === 0 ? (
+            <div className="text-center py-12">
+              <Heart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-gray-600 mb-2">No matches yet</h3>
+              <p className="text-gray-500">Start swiping to find your Pi soulmate!</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {matches.map((match: any) => (
+                <div key={match.id} className="bg-white rounded-xl p-4 border border-purple-100 shadow-sm">
+                  <div className="flex items-center space-x-3">
+                    <img 
+                      src={match.images[0]} 
+                      alt={match.name}
+                      className="w-14 h-14 rounded-full object-cover border-2 border-pink-200"
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2">
+                        <h3 className="font-semibold text-gray-800">{match.name}</h3>
+                        {match.piVerified && (
+                          <Crown className="w-4 h-4 text-yellow-500" />
+                        )}
+                      </div>
+                      <p className="text-sm text-gray-600">You matched!</p>
+                    </div>
+                    <button 
+                      onClick={() => openChat(match)}
+                      className="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-all"
+                    >
+                      Chat
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
+  if (currentScreen === 'login') return <LoginScreen />;
+  if (currentScreen === 'match') return <MatchScreen />;
+  if (currentScreen === 'premium') return <PremiumScreen />;
+  if (currentScreen === 'matches') return <MatchesScreen />;
+  if (currentScreen === 'chat') return <ChatScreen />;
+  
+  return <MainScreen />;
+};
+
+export default PiMatchApp;
