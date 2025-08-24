@@ -237,6 +237,8 @@ const PiMatchApp = () => {
   };
 
   const handleSwipe = (direction: string) => {
+    console.log("Swiping:", direction, "Current index:", currentCardIndex);
+    
     if (direction === 'right') {
       if (Math.random() > 0.5) {
         const matchedUser = mockUsers[currentCardIndex];
@@ -246,7 +248,14 @@ const PiMatchApp = () => {
       }
     }
     
-    setCurrentCardIndex(prev => (prev + 1) % mockUsers.length);
+    const nextIndex = (currentCardIndex + 1) % mockUsers.length;
+    console.log("Next index will be:", nextIndex);
+    setCurrentCardIndex(nextIndex);
+    
+    // Reset drag state
+    setIsDragging(false);
+    setDragCurrent({ x: 0, y: 0 });
+    setDragStart({ x: 0, y: 0 });
   };
 
   const makePiPayment = (amount: number, feature: string) => {
